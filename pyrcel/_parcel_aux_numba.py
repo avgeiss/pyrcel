@@ -201,14 +201,24 @@ def parcel_ode_sys(y, t, nr, r_drys, Nis, V, kappas, accom):
     #S_b = L*Mw*dT_dt/(R*T**2.)
     #S_c = V*g*Ma/(R*T)
     #dS_dt = dwv_dt*(Ma*P)/(Mw*es(T-273.15)) - S_a*(S_b + S_c)
-    """
 
     ## GHAN (2011)
-    alpha = (c.g * c.Mw * c.L) / (c.Cp * c.R * (T**2))
-    alpha -= (c.g * c.Ma) / (c.R * T)
-    gamma = (P * c.Ma) / (c.Mw * pv_sat)
-    gamma += (c.Mw * c.L * c.L) / (c.Cp * c.R * T * T)
-    dS_dt = alpha * V - gamma * dwc_dt
+    #alpha = (c.g * c.Mw * c.L) / (c.Cp * c.R * (T**2))
+    #alpha -= (c.g * c.Ma) / (c.R * T)
+    #gamma = (P * c.Ma) / (c.Mw * pv_sat)
+    #gamma += (c.Mw * c.L * c.L) / (c.Cp * c.R * T * T)
+    #dS_dt = alpha * V - gamma * dwc_dt
+    """
+    
+    #A. Geiss
+    RH = S+1
+    alpha = ((RH*c.g)/(c.Rv*T)) * (c.L/(c.Cp*T) - (1+wv)/(c.epsilon+wv))
+    gamma = (RH*c.L*c.L)/(c.Cp*c.Rv*T*T) + (P*c.epsilon)/(pv_sat*(c.epsilon+wv)**2)
+    dS_dt = alpha*V + gamma*dwv_dt
+    #An equivalent derivative in terms of dP/dt and dT/dt:
+    #dS_dt = RH*(dP_dt/P - (c.L/c.Rv)*dT_dt/(T*T)) + dwv_dt*(P*c.epsilon/(pv_sat*(c.epsilon+wv)**2))
+    
+    
 
     # x = np.empty(shape=(nr+N_STATE_VARS), dtype='d')
     x = np.empty_like(y)
