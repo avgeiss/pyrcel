@@ -124,11 +124,9 @@ def parcel_ode_sys(y, t, nr, r_drys, Nis, V, kappas, accom):
     S = y[6]
     rs = y[N_STATE_VARS:]
 
-    T_c = T - 273.15  # convert temperature to Celsius
-    pv_sat = es(T_c)  # saturation vapor pressure
-    wv_sat = wv / (S + 1.0)  # saturation mixing ratio
-    Tv = (1.0 + 0.61 * wv) * T
-    e = (1.0 + S) * pv_sat  # water vapor pressure
+    e = P*wv/(c.epsilon + wv)
+    pv_sat = e/(S+1.0)
+    Tv = T*(1.0+wv/c.epsilon)/(1.0+wv)
 
     ## Compute air densities from current state
     rho_air = P / c.Rd / Tv
@@ -188,6 +186,7 @@ def parcel_ode_sys(y, t, nr, r_drys, Nis, V, kappas, accom):
     #S_a = (S+1.0)
 
     ## NENES (2001)
+    #wv_sat = c.epsilon*pv_sat/(P-pv_sat)
     #S_b_old = dT_dt*wv_sat*(17.67*243.5)/((243.5+(Tv-273.15))**2.)
     #S_c_old = (rho_air*g*V)*(wv_sat/P)*((0.622*L)/(Cp*Tv) - 1.0)
     #dS_dt_old = (1./wv_sat)*(dwv_dt - S_a*(S_b_old-S_c_old))
