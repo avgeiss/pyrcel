@@ -10,9 +10,9 @@ Symbol            Variable      Value      Units             Description
 :math:`\\rho_w`    ``rho_w``     1000.0     kg m**-3         density of water at STP
 :math:`R_d`       ``Rd``        287.0      J/kg/K            gas constant for dry air
 :math:`R_v`       ``Rv``        461.5      J/kg/K            gas constant for water vapor
-:math:`R`         ``R``         8.314      J/mol/K           universal gas constant
-:math:`M_w`       ``Mw``        0.018      kg/mol            molecular weight of water
-:math:`M_a`       ``Ma``        0.0289     kg/mol            molecular weight of dry air
+:math:`R`         ``R``         8.31446    J/mol/K           universal gas constant
+:math:`M_w`       ``Mw``        0.018016   kg/mol            molecular weight of water
+:math:`M_a`       ``Ma``        0.028965   kg/mol            molecular weight of dry air
 :math:`D_v`       ``Dv``        3e-5       m**2/s            diffusivity of water vapor
                                                              in air
 :math:`L_v`       ``L``         2.5e6      J/kg/K            latent heat of vaporization
@@ -50,16 +50,16 @@ g = 9.81  #: Gravitational constant, m/s^2
 Cp = 1004.0  #: Specific heat of dry air at constant pressure, J/kg
 L = 2.5e6  #: Latent heat of condensation, J/kg
 rho_w = 1e3  #: Density of water, kg/m^3
-R = 8.314  #: Universal gas constant, J/(mol K)
-Mw = 18.0 / 1e3  #: Molecular weight of water, kg/mol
-Ma = 28.9 / 1e3  #: Molecular weight of dry air, kg/mol
+R = 8.31446  #: Universal gas constant, J/(mol K)
+Mw = 18.016 / 1e3  #: Molecular weight of water, kg/mol
+Ma = 28.965 / 1e3  #: Molecular weight of dry air, kg/mol
 Rd = R / Ma  #: Gas constant for dry air, J/(kg K)
 Rv = R / Mw  #: Gas constant for water vapor, J/(kg K)
 Dv = 3.0e-5  #: Diffusivity of water vapor in air, m^2/s
 ac = 1.0  #: condensation constant
 Ka = 2.0e-2  #: Thermal conductivity of air, J/m/s/K
 at = 0.96  #: thermal accomodation coefficient
-epsilon = 0.622  #: molecular weight of water / molecular weight of dry air
+epsilon = Mw/Ma  #: molecular weight of water / molecular weight of dry air
 
 # Additional fixed model parameters
 N_STATE_VARS = 7
