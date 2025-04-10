@@ -5,9 +5,19 @@ This fork of pyrcel updates the package so that it can represent parcels that st
 
 # Updated $\frac{dS}{dt}$ formula
  This change updates the expression for $\frac{dS}{dt}$ to:
-$$\frac{dS}{dt} = \alpha V + \gamma\frac{dw_v}{dt}$$
-$$\alpha = \frac{RHg}{R_vT}\left(\frac{L_v}{C_pT}-\left(\frac{1+w_v}{\varepsilon + w_v}\right)\right)$$
-$$\gamma = \frac{RHL_v^2}{C_pR_vT^2} + \left(\frac{P\varepsilon}{e_s(\varepsilon+w_v)^2}\right)$$
+ 
+```math
+\frac{dS}{dt} = \alpha V + \gamma\frac{dw_v}{dt}
+```
+
+```math
+\alpha = \frac{RHg}{R_vT}\left(\frac{L_v}{C_pT}-\left(\frac{1+w_v}{\varepsilon + w_v}\right)\right)
+```
+
+```math
+\gamma = \frac{RHL_v^2}{C_pR_vT^2} + \left(\frac{P\varepsilon}{e_s(\varepsilon+w_v)^2}\right)
+```
+
 which is accurate even when $RH \neq 1$.
 
 
@@ -25,41 +35,122 @@ I still need to run more exhaustive tests of this fork. So far I have found that
 
 # $\frac{dS}{dt}$ derivation
 This is a derivation for the updated $\frac{dS}{dt}$ formula:
-$$\frac{dS}{dt} = \frac{dRH}{dt} = \frac{d}{dt} \left(\frac{e}{e_s}\right)$$
-$$\frac{dRH}{dt} = e_s^{-2} \left(\frac{de}{dt}e_s - \frac{de_s}{dt}e\right)$$
+
+```math
+\frac{dS}{dt} = \frac{dRH}{dt} = \frac{d}{dt} \left(\frac{e}{e_s}\right)
+```
+
+```math
+\frac{dRH}{dt} = e_s^{-2} \left(\frac{de}{dt}e_s - \frac{de_s}{dt}e\right)
+```
+
 Using Clausius-Clapeyron:
-$$\frac{de_s}{dt} = \frac{de_s}{dT} \frac{dT}{dt}$$
-$$\frac{de_s}{dT} = \frac{L_ve_s}{R_vT^2}$$
-$$\frac{de_s}{dt} = e_s\frac{dT}{dt}\frac{L_v}{R_vT^2}$$
+
+```math
+\frac{de_s}{dt} = \frac{de_s}{dT} \frac{dT}{dt}
+```
+
+```math
+\frac{de_s}{dT} = \frac{L_ve_s}{R_vT^2}
+```
+
+```math
+\frac{de_s}{dt} = e_s\frac{dT}{dt}\frac{L_v}{R_vT^2}
+```
+
 For the vapor pressure derivative:
-$$e = \frac{Pw_v}{\varepsilon + w_v}$$
-$$\frac{de}{dt} = \frac{d}{dt} \left(\frac{Pw_v}{\varepsilon + w_v}\right)$$
-$$\frac{de}{dt} = \frac{1}{(\varepsilon+w_v)^2}\left(\frac{d}{dt}(Pw_v)(\varepsilon+w_v) - \frac{d}{dt}(\varepsilon+w_v)(Pw_v)\right)$$
-$$\frac{de}{dt} = \left(P\frac{dw_v}{dt} + w_v\frac{dP}{dt}\right)\frac{1}{\varepsilon+w_v} - \frac{dw_v}{dt}\frac{Pw_v}{(\varepsilon+w_v)^2}$$
-$$\frac{de}{dt} = \frac{e}{w_v}\frac{dw_v}{dt} + \frac{e}{P}\frac{dP}{dt} - e\frac{dw_v}{dt}\frac{1}{\varepsilon + w_v}$$
-$$\frac{de}{dt} = \frac{e}{P}\frac{dP}{dt} + e\frac{dw_v}{dt}\left(\frac{1}{w_v} - \frac{1}{\varepsilon + w_v}\right)$$
+
+```math
+e = \frac{Pw_v}{\varepsilon + w_v}
+```
+
+```math
+\frac{de}{dt} = \frac{d}{dt} \left(\frac{Pw_v}{\varepsilon + w_v}\right)
+```
+
+```math
+\frac{de}{dt} = \frac{1}{(\varepsilon+w_v)^2}\left(\frac{d}{dt}(Pw_v)(\varepsilon+w_v) - \frac{d}{dt}(\varepsilon+w_v)(Pw_v)\right)
+```
+
+```math
+\frac{de}{dt} = \left(P\frac{dw_v}{dt} + w_v\frac{dP}{dt}\right)\frac{1}{\varepsilon+w_v} - \frac{dw_v}{dt}\frac{Pw_v}{(\varepsilon+w_v)^2}
+```
+
+```math
+\frac{de}{dt} = \frac{e}{w_v}\frac{dw_v}{dt} + \frac{e}{P}\frac{dP}{dt} - e\frac{dw_v}{dt}\frac{1}{\varepsilon + w_v}
+```
+```math
+\frac{de}{dt} = \frac{e}{P}\frac{dP}{dt} + e\frac{dw_v}{dt}\left(\frac{1}{w_v} - \frac{1}{\varepsilon + w_v}\right)
+```
+
 Finally:
-$$\frac{dRH}{dt} = e_s^{-2} \left(\left(\frac{e}{P}\frac{dP}{dt} + e\frac{dw_v}{dt}\left(\frac{1}{w_v} - \frac{1}{\varepsilon + w_v}\right)\right)e_s - \left(e_s\frac{dT}{dt}\frac{L_v}{R_vT^2}\right)e\right)$$
-$$\frac{dRH}{dt} = RH \left(\frac{1}{P}\frac{dP}{dt}- \frac{dT}{dt}\frac{L_v}{R_vT^2} + \frac{dw_v}{dt}\left(\frac{1}{w_v} - \frac{1}{\varepsilon + w_v}\right)\right)$$
+```math
+\frac{dRH}{dt} = e_s^{-2} \left(\left(\frac{e}{P}\frac{dP}{dt} + e\frac{dw_v}{dt}\left(\frac{1}{w_v} - \frac{1}{\varepsilon + w_v}\right)\right)e_s - \left(e_s\frac{dT}{dt}\frac{L_v}{R_vT^2}\right)e\right)
+```
+
+```math
+\frac{dRH}{dt} = RH \left(\frac{1}{P}\frac{dP}{dt}- \frac{dT}{dt}\frac{L_v}{R_vT^2} + \frac{dw_v}{dt}\left(\frac{1}{w_v} - \frac{1}{\varepsilon + w_v}\right)\right)
+```
+
 When $RH \approx 0$ the $1/w_v$ term could be very large. This can be removed by distributing the $RH$ term:
-$$\frac{dRH}{dt} = RH \left(\frac{1}{P}\frac{dP}{dt}- \frac{dT}{dt}\frac{L_v}{R_vT^2}\right) + \frac{dw_v}{dt}\left(\frac{P\varepsilon}{e_s(\varepsilon+w_v)^2}\right)$$
+
+```math
+\frac{dRH}{dt} = RH \left(\frac{1}{P}\frac{dP}{dt}- \frac{dT}{dt}\frac{L_v}{R_vT^2}\right) + \frac{dw_v}{dt}\left(\frac{P\varepsilon}{e_s(\varepsilon+w_v)^2}\right)
+```
+
 This can be used for the $S$ derivative in pyrcel because it directly uses the other time derivatives already computed by the parcel model. We can also eliminate the derivatives of $P$ and $T$ and separate out the components due to adiabatic ascent and due to condensation like the formula used in Ghan et al. (2011):
-$$\frac{dP}{dt} = -g\rho V$$
+
+```math
+\frac{dP}{dt} = -g\rho V
+```
+
 where $\rho = \frac{P}{R_dT_v}$ and $T_v = T\frac{1+\frac{w_v}{\varepsilon}}{1+w_v}$
-$$\frac{1}{P}\frac{dP}{dt} = -\frac{1}{P}g\left( \frac{P}{R_d\left(T\frac{1+\frac{w_v}{\varepsilon}}{1+w_v}\right)}\right)V$$
-$$\frac{1}{P}\frac{dP}{dt} = -\frac{gV\varepsilon(1+w_v)}{R_dT(\varepsilon + w_v)}$$
-$$\frac{1}{P}\frac{dP}{dt} = -\frac{gVM_w(1+w_v)}{RT(\varepsilon + w_v)}$$
+
+```math
+\frac{1}{P}\frac{dP}{dt} = -\frac{1}{P}g\left( \frac{P}{R_d\left(T\frac{1+\frac{w_v}{\varepsilon}}{1+w_v}\right)}\right)V
+```
+
+```math
+\frac{1}{P}\frac{dP}{dt} = -\frac{gV\varepsilon(1+w_v)}{R_dT(\varepsilon + w_v)}
+```
+
+```math
+\frac{1}{P}\frac{dP}{dt} = -\frac{gVM_w(1+w_v)}{RT(\varepsilon + w_v)}
+```
+
 For the temperature derivative:
-$$\frac{dT}{dt}\frac{L_v}{R_vT^2} = -\left(\frac{gV}{C_p} + \frac{L_v}{C_p}\frac{dw_v}{dt}\right)\frac{L_v}{R_vT^2}$$
-$$\frac{dT}{dt}\frac{L_v}{R_vT^2} = -V\frac{gL_v}{C_pR_vT^2} - \frac{dw_v}{dt}\frac{L_v^2}{C_pR_vT^2}$$
-$$\frac{dT}{dt}\frac{L_v}{R_vT^2} = -V\frac{gL_vM_w}{C_pRT^2} - \frac{dw_v}{dt}\frac{L_v^2M_w}{C_pRT^2}$$
+
+```math
+\frac{dT}{dt}\frac{L_v}{R_vT^2} = -\left(\frac{gV}{C_p} + \frac{L_v}{C_p}\frac{dw_v}{dt}\right)\frac{L_v}{R_vT^2}
+```
+
+```math
+\frac{dT}{dt}\frac{L_v}{R_vT^2} = -V\frac{gL_v}{C_pR_vT^2} - \frac{dw_v}{dt}\frac{L_v^2}{C_pR_vT^2}
+```
+
+```math
+\frac{dT}{dt}\frac{L_v}{R_vT^2} = -V\frac{gL_vM_w}{C_pRT^2} - \frac{dw_v}{dt}\frac{L_v^2M_w}{C_pRT^2}
+```
+
 Plugging these into the expression for the RH derivative:
-$$\frac{1}{RH}\frac{dRH}{dt} = -V\frac{g}{R_vT}\left(\frac{1+w_v}{\varepsilon + w_v}\right) + V\frac{gL_v}{C_pR_vT^2} + \frac{dw_v}{dt}\frac{L_v^2}{C_pR_vT^2} + \frac{dw_v}{dt}\frac{\varepsilon}{w_v(\varepsilon + w_v)}$$
+```math
+\frac{1}{RH}\frac{dRH}{dt} = -V\frac{g}{R_vT}\left(\frac{1+w_v}{\varepsilon + w_v}\right) + V\frac{gL_v}{C_pR_vT^2} + \frac{dw_v}{dt}\frac{L_v^2}{C_pR_vT^2} + \frac{dw_v}{dt}\frac{\varepsilon}{w_v(\varepsilon + w_v)}
+```
+
 The change due to adiabatic ascent and the change due to condensation are now separable:
-$$\frac{dS}{dt} = \alpha V + \gamma\frac{dw_v}{dt}$$
-$$\alpha = \frac{RHg}{R_vT}\left(\frac{L_v}{C_pT}-\frac{1+w_v}{\varepsilon + w_v}\right)$$
-$$\gamma = \frac{RHL_v^2}{C_pR_vT^2} + \frac{P\varepsilon}{e_s(\varepsilon+w_v)^2}$$
-These are slightly different than the formulas given in Ghan et al. 2011. If we make the assumptions that $RH \approx 1$, $(1+w_v) \approx 1$, and $(\varepsilon + w_v) \approx \varepsilon$, then this simplifies to the formula from Ghan et al. 2011 (originally from  Pruppacher and Klett). These assumptions will not work for parcels that do not start saturated though.
+```math
+\frac{dS}{dt} = \alpha V + \gamma\frac{dw_v}{dt}
+```
+
+```math
+\alpha = \frac{RHg}{R_vT}\left(\frac{L_v}{C_pT}-\frac{1+w_v}{\varepsilon + w_v}\right)
+```
+
+```math
+\gamma = \frac{RHL_v^2}{C_pR_vT^2} + \frac{P\varepsilon}{e_s(\varepsilon+w_v)^2}
+```
+
+These are slightly different than the formulas given in Ghan et al. 2011. If we make the assumptions that $RH \approx 1$, $(1+w_v) \approx 1$, and $(\varepsilon + w_v) \approx \varepsilon$, then this simplifies to the formula from Ghan et al. 2011 (originally from  Pruppacher and Klett). These assumptions will not work for parcels that do not start saturated though. 
 
 -Andrew Geiss, PNNL, April 9th, 2025.
 
