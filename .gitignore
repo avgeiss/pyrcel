@@ -16,7 +16,6 @@ dist/
 
 # Previously generated files
 ############################
-*.pdf
 *.csv
 *.nc
 *.html
